@@ -1,1 +1,3 @@
-import("../pkg/index.js").catch(console.error);
+import('eo').then(eo => {
+    console.log(eo);
+}).catch(console.error);
