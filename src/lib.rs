@@ -84,3 +84,23 @@ pub fn get_spell_file(buf: &[EOByte]) -> JsValue {
 
     JsValue::from_serde(&esf).unwrap()
 }
+
+#[wasm_bindgen]
+pub fn get_master_file(buf: &[EOByte]) -> JsValue {
+    let mut emf = MasterFile::new();
+    let mut cursor: Cursor<Vec<EOByte>> = Cursor::new(Vec::new());
+    cursor.write_all(buf).unwrap();
+    emf.read(&mut cursor).unwrap();
+
+    JsValue::from_serde(&emf).unwrap()
+}
+
+#[wasm_bindgen]
+pub fn get_talk_file(buf: &[EOByte]) -> JsValue {
+    let mut etf = TalkFile::new();
+    let mut cursor: Cursor<Vec<EOByte>> = Cursor::new(Vec::new());
+    cursor.write_all(buf).unwrap();
+    etf.read(&mut cursor).unwrap();
+
+    JsValue::from_serde(&etf).unwrap()
+}

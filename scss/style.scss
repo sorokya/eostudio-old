@@ -1,1 +1,12 @@
 @import "~bootstrap";
+
+.file-upload {
+  margin:10px 0;
+}
+
+.edit-table {
+  margin-top:10px;
+  tbody tr {
+    cursor: pointer;
+  }
+}

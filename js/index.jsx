@@ -5,6 +5,6 @@
 import '../scss/style.scss';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Welcome from './Welcome';
+import App from './App';
 
-ReactDOM.render(<Welcome />, document.getElementById('container'))
+ReactDOM.render(<App />, document.getElementById('container'))

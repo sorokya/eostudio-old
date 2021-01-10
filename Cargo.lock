@@ -48,7 +48,7 @@ dependencies = [
 [[package]]
 name = "eo"
 version = "0.1.0"
-source = "git+https://github.com/sorokya/eo#3b7a4333219943811b1f0ef45f085e570e621b8c"
+source = "git+https://github.com/sorokya/eo#532e56a3002a59894d974c13ba0ef52fbb23a154"
 dependencies = [
  "enum-primitive-derive",
  "num-traits",
