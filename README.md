@@ -3,6 +3,12 @@ A web app for editing eo pub files
 
 ## How to install
 
+Make sure you have [rustup](https://rustup.rs/),
+[nodejs](https://nodejs.org/en/), and 
+[yarn](https://yarnpkg.com/getting-started/install) installed.
+
+Then run the script below to install the dependencies
+
 ```sh
 yarn
 ```
