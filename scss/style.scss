@@ -4,9 +4,17 @@
   margin:10px 0;
 }
 
+.editor > button {
+  margin-right:5px;
+}
+
 .edit-table {
   margin-top:10px;
   tbody tr {
     cursor: pointer;
   }
+}
+
+.edit-record {
+  margin-top:10px;
 }
