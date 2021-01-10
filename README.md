@@ -4,6 +4,7 @@ A web app for editing eo pub files
 ## How to install
 
 Make sure you have [rustup](https://rustup.rs/),
+[wasm-pack](https://rustwasm.github.io/wasm-pack/installer/),
 [nodejs](https://nodejs.org/en/), and 
 [yarn](https://yarnpkg.com/getting-started/install) installed.
 
