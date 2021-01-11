@@ -25,6 +25,14 @@
   color:$primary;
 }
 
+#table-filter {
+  float:right;
+  input {
+    display:inline-block;
+    width:300px;
+  }
+}
+
 .no-records {
   margin-top:10px;
 }
