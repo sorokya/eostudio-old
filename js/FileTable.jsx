@@ -1,23 +1,17 @@
 import React, { useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
+import Button from 'react-bootstrap/Button';
 
 function FileTable(props) {
   const pubType = props.pubType;
   const file = props.file;
   const npcFile = props.npcFile;
-  const scrollY = props.scrollY;
 
   const onRecordClick = (event) => {
     const index = event.target.parentElement.getAttribute('data-index');
     const record = file.records[parseInt(index, 10)];
-    props.onRecordSelect(record, window.scrollY);
+    props.onRecordSelect(record);
   };
-
-  useEffect(() => {
-    if (scrollY) {
-      window.scrollTo(0, scrollY);
-    }
-  });
 
   const getHeaderRow = () => {
     if (['item', 'class', 'npc', 'spell'].includes(pubType)) {
@@ -82,14 +76,25 @@ function FileTable(props) {
   };
 
   return (
-    <Table className="edit-table" striped bordered hover>
-      <thead>
-        {getHeaderRow()}
-      </thead>
-      <tbody>
-        {getTableRows()}
-      </tbody>
-    </Table>
+    <>
+      <Button variant="success"><i className="fa fa-plus"></i>&nbsp;Add Record</Button>
+      {!!file.records.length &&
+        <Table className="edit-table" striped bordered hover>
+          <thead>
+            {getHeaderRow()}
+          </thead>
+          <tbody>
+            {getTableRows()}
+          </tbody>
+        </Table>
+      }
+      {!file.records.length &&
+        <p className="no-records">
+          There aren&apos;t any {pubType} records yet. Click &quot;Add Record&quot; to add one,
+          or click &quot;Import Data&quot; to import an existing {pubType} files.
+        </p>
+      }
+    </>
   )
 }
 

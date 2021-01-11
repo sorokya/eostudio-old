@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import Card from 'react-bootstrap/Card';
 
 function ClassRecord(props) {
   const record = props.record;
@@ -34,79 +33,76 @@ function ClassRecord(props) {
   };
 
   return (
-    <Card className="edit-record">
-      <Card.Header>Editing Class Record</Card.Header>
-      <Card.Body>
-        <Row>
-          <Col>
-            <Form.Group controlId="name">
-              <Form.Label>Name</Form.Label>
-              <Form.Control type="text" placeholder="Name" value={name} onChange={onNameChange} />
-            </Form.Group>
-          </Col>
-          <Col>
-            <Form.Group controlId="base">
-              <Form.Label>Base Class</Form.Label>
-              <Form.Control as="select" value={base} onChange={onBaseChange}>
-                {getBaseClassOptions()}
-              </Form.Control>
-            </Form.Group>
-          </Col>
-          <Col>
-            <Form.Group controlId="type">
-              <Form.Label>Class Type</Form.Label>
-              <Form.Control as="select" value={type} onChange={onTypeChange}>
-                <option value="0">Melee</option>
-                <option value="1">Rogue</option>
-                <option value="2">Magic</option>
-                <option value="3">Archer</option>
-                <option value="4">Peasant</option>
-              </Form.Control>
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Form.Group controlId="strength">
-              <Form.Label>Strength</Form.Label>
-              <Form.Control type="number" placeholder="Stength" value={strength} onChange={onStrengthChange} />
-            </Form.Group>
-          </Col>
-          <Col>
-            <Form.Group controlId="intelligence">
-              <Form.Label>Intelligence</Form.Label>
-              <Form.Control type="number" placeholder="Intelligence" value={intelligence} onChange={onIntelligenceChange} />
-            </Form.Group>
-          </Col>
-          <Col>
-            <Form.Group controlId="wisdom">
-              <Form.Label>Wisdom</Form.Label>
-              <Form.Control type="number" placeholder="Wisdom" value={wisdom} onChange={onWisdomChange} />
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Form.Group controlId="agility">
-              <Form.Label>Agility</Form.Label>
-              <Form.Control type="number" placeholder="Agility" value={agility} onChange={onAgilityChange} />
-            </Form.Group>
-          </Col>
-          <Col>
-            <Form.Group controlId="charisma">
-              <Form.Label>Charisma</Form.Label>
-              <Form.Control type="number" placeholder="Charisma" value={charisma} onChange={onCharismaChange} />
-            </Form.Group>
-          </Col>
-          <Col>
-            <Form.Group controlId="constitution">
-              <Form.Label>Constitution</Form.Label>
-              <Form.Control type="number" placeholder="Constitution" value={constitution} onChange={onConstitutionChange} />
-            </Form.Group>
-          </Col>
-        </Row>
-      </Card.Body>
-    </Card>
+    <>
+      <Row>
+        <Col>
+          <Form.Group controlId="name">
+            <Form.Label>Name</Form.Label>
+            <Form.Control type="text" placeholder="Name" value={name} onChange={onNameChange} />
+          </Form.Group>
+        </Col>
+        <Col>
+          <Form.Group controlId="base">
+            <Form.Label>Base Class</Form.Label>
+            <Form.Control as="select" value={base} onChange={onBaseChange}>
+              {getBaseClassOptions()}
+            </Form.Control>
+          </Form.Group>
+        </Col>
+        <Col>
+          <Form.Group controlId="type">
+            <Form.Label>Class Type</Form.Label>
+            <Form.Control as="select" value={type} onChange={onTypeChange}>
+              <option value="0">Melee</option>
+              <option value="1">Rogue</option>
+              <option value="2">Magic</option>
+              <option value="3">Archer</option>
+              <option value="4">Peasant</option>
+            </Form.Control>
+          </Form.Group>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Form.Group controlId="strength">
+            <Form.Label>Strength</Form.Label>
+            <Form.Control type="number" placeholder="Stength" value={strength} onChange={onStrengthChange} />
+          </Form.Group>
+        </Col>
+        <Col>
+          <Form.Group controlId="intelligence">
+            <Form.Label>Intelligence</Form.Label>
+            <Form.Control type="number" placeholder="Intelligence" value={intelligence} onChange={onIntelligenceChange} />
+          </Form.Group>
+        </Col>
+        <Col>
+          <Form.Group controlId="wisdom">
+            <Form.Label>Wisdom</Form.Label>
+            <Form.Control type="number" placeholder="Wisdom" value={wisdom} onChange={onWisdomChange} />
+          </Form.Group>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Form.Group controlId="agility">
+            <Form.Label>Agility</Form.Label>
+            <Form.Control type="number" placeholder="Agility" value={agility} onChange={onAgilityChange} />
+          </Form.Group>
+        </Col>
+        <Col>
+          <Form.Group controlId="charisma">
+            <Form.Label>Charisma</Form.Label>
+            <Form.Control type="number" placeholder="Charisma" value={charisma} onChange={onCharismaChange} />
+          </Form.Group>
+        </Col>
+        <Col>
+          <Form.Group controlId="constitution">
+            <Form.Label>Constitution</Form.Label>
+            <Form.Control type="number" placeholder="Constitution" value={constitution} onChange={onConstitutionChange} />
+          </Form.Group>
+        </Col>
+      </Row>
+    </>
   );
 }
 

@@ -1,11 +1,38 @@
 @import "~bootstrap";
 
 .file-upload {
-  margin:10px 0;
+  border:2px dashed #757575;
+  border-radius: 5px;
+  height:200px;
+  position: relative;
+  cursor:pointer;
+
+  p {
+    position: absolute;
+    width:100%;
+    top:calc(50% - 20px);
+    text-align: center;
+  }
+  input {
+    display: none;
+  }
 }
 
-.editor > button {
+.file-loading-indicator {
+  height:200px;
+  text-align: center;
+  font-size:3em;
+  color:$primary;
+}
+
+.no-records {
+  margin-top:10px;
+}
+
+.editor {
+  > button {
   margin-right:5px;
+  }
 }
 
 .edit-table {
@@ -13,8 +40,13 @@
   tbody tr {
     cursor: pointer;
   }
+
 }
 
 .edit-record {
   margin-top:10px;
+}
+
+.nav {
+  margin: 10px 0;
 }

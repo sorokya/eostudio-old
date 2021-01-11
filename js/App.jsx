@@ -1,76 +1,95 @@
-import utils from './utils';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Container from 'react-bootstrap/Container';
-import Welcome from './Welcome';
-import Editor from './Editor';
+import Nav from 'react-bootstrap/Nav';
+import FileTable from './FileTable';
+import Button from 'react-bootstrap/Button';
+import FileImporter from './FileImporter';
+import RecordEditor from './RecordEditor';
 
 function App() {
-  const [editPubType, setEditPubType] = useState('');
-  const [appState, setAppState] = useState('welcome');
-  const [fileCount, setFileCount] = useState(0);
-  const [loadedCount, setLoadedCount] = useState(0);
   const [files, setFiles] = useState([]);
+  const [showFileImporter, setShowFileImporter] = useState(false);
+  const [showRecordEditor, setShowRecordEditor] = useState(false);
+  const [tab, setTab] = useState('#class');
+  const [record, setRecord] = useState(undefined);
 
-  const [itemFile, setItemFile] = useState(undefined);
-  const [classFile, setClassFile] = useState(undefined);
-  const [npcFile, setNpcFile] = useState(undefined);
-  const [spellFile, setSpellFile] = useState(undefined);
-  const [shopFile, setShopFile] = useState(undefined);
-  const [masterFile, setMasterFile] = useState(undefined);
-  const [innFile, setInnFile] = useState(undefined);
-  const [talkFile, setTalkFile] = useState(undefined);
-  const [dropFile, setDropFile] = useState(undefined);
+  const handleImportDataClick = () => setShowFileImporter(true);
+  const onImportDataClose = () => setShowFileImporter(false);
+  const onRecordEditorClose = () => setShowRecordEditor(false);
+  const onTabSelect = (tab) => setTab(tab);
+  const getPubType = () => tab.substr(1);
 
-  useEffect(() => {
-    if (fileCount && loadedCount === fileCount) {
-      setAppState('editing');
+  const onFilesImported = files => {
+    setShowFileImporter(false);
+    setFiles(files);
+  };
+
+  const onRecordSelect = record => {
+    setRecord(record);
+    setShowRecordEditor(true);
+  };
+
+  const getPubFile = (type) => {
+    const result = files.filter(file => file.pubType === type);
+    if (result && result.length) {
+      return result[0].file;
     }
-  }, [loadedCount]);
 
-  const getPubFromFileContent = (pubType, fileContent) => {
-    import('../pkg').then(eo => {
-      const arrayBuffer = fileContent;
-      const array = new Uint8Array(arrayBuffer);
-      const file = eo[`get_${pubType}_file`](array);
-      setFiles(files => {
-        files.push({
-          pubType: pubType,
-          file: file
-        });
-        return files;
-      });
-      setLoadedCount(count => count + 1);
-    });
+    return { records: [] };
   };
 
-  const onWelcomeSubmit = (files) => {
-    setFileCount(files.length);
-    files.forEach((file, i) => {
-      const pubType = utils.getPubType(file.name);
-      const reader = new FileReader();
-      reader.onload = function () {
-        getPubFromFileContent(pubType, this.result);
-      };
-      reader.readAsArrayBuffer(file);
-      if (i === 0) setEditPubType(pubType);
-    });
+  const getFileTable = () => {
+    const pubType = getPubType();
+    const file = getPubFile(pubType);
+    const npcFile = getPubFile('npc');
+    return <FileTable pubType={pubType} file={file} npcFile={npcFile} onRecordSelect={onRecordSelect} />;
   };
 
-  const onEditCancel = () => {
-    setFileCount(0);
-    setLoadedCount(0);
-    setAppState('welcome');
+  const getRecordEditor = () => {
+    const pubType = getPubType();
+    const classFile = getPubFile('class');
+    return <RecordEditor pubType={pubType} record={record}
+      classFile={classFile} show={showRecordEditor} onClose={onRecordEditorClose} />;
   }
 
   return (
     <Container>
       <h1>EO Studio</h1>
-      {appState === 'welcome' &&
-        <Welcome onSubmit={onWelcomeSubmit} />}
-      {appState === 'editing' &&
-        <Editor pubType={editPubType}
-          files={files}
-          onCancel={onEditCancel} />}
+      <Button variant="primary" onClick={handleImportDataClick}><i className="fa fa-file-import"></i>&nbsp;Import Data</Button>
+      &nbsp;
+      <Button variant="success"><i className="fa fa-file-export"></i>&nbsp;Export Data</Button>
+      <Nav variant="tabs" defaultActiveKey="#class" onSelect={onTabSelect}>
+        <Nav.Item>
+          <Nav.Link href="#class">Classes</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link href="#drop">Drops</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link href="#inn">Inns</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link href="#item">Items</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link href="#master">Skill Masters</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link href="#npc">NPCs</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link href="#shop">Shops</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link href="#spell">Spells</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link href="#talk">Talk</Nav.Link>
+        </Nav.Item>
+      </Nav>
+      {getFileTable()}
+      {showRecordEditor && getRecordEditor()}
+      <FileImporter show={showFileImporter} onFilesImported={onFilesImported} onClose={onImportDataClose} />
     </Container>
   );
 }
