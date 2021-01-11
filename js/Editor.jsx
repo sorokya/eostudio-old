@@ -18,15 +18,16 @@ function Editor(props) {
   };
 
   const file = getPubFile(pubType);
-  const npc_file = getPubFile('npc');
-  const item_file = getPubFile('item');
+  const classFile = getPubFile('class');
+  const itemFile = getPubFile('item');
+  const npcFile = getPubFile('npc');
 
   const getRecord = () => {
     switch (pubType) {
       case 'class':
         return <ClassRecord record={record} file={file} />;
       case 'item':
-        return <ItemRecord record={record} />;
+        return <ItemRecord record={record} classFile={classFile} />;
     }
   };
 
@@ -51,7 +52,7 @@ function Editor(props) {
         <Button variant="danger">Remove</Button>}
       <Button variant="default" onClick={onCancel}>Cancel</Button>
       {editorState === 'file' &&
-        <FileTable pubType={pubType} file={file} npc_file={npc_file}
+        <FileTable pubType={pubType} file={file} npcFile={npcFile}
           onRecordSelect={onRecordSelect} scrollY={tableScrollY} />}
       {editorState === 'record' && getRecord()}
     </div>

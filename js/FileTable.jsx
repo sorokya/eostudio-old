@@ -4,7 +4,7 @@ import Table from 'react-bootstrap/Table';
 function FileTable(props) {
   const pubType = props.pubType;
   const file = props.file;
-  const npc_file = props.npc_file;
+  const npcFile = props.npcFile;
   const scrollY = props.scrollY;
 
   const onRecordClick = (event) => {
@@ -38,7 +38,7 @@ function FileTable(props) {
       return (
         <tr>
           <th>NPC ID</th>
-          {npc_file && <th>Name</th>}
+          {npcFile && <th>Name</th>}
         </tr>
       )
     }
@@ -64,8 +64,8 @@ function FileTable(props) {
         </>)));
       } else if (['drop', 'talk'].includes(pubType)) {
         let name = '';
-        if (npc_file) {
-          const result = npc_file.records.filter((npc) => npc.id === record.npc_id);
+        if (npcFile) {
+          const result = npcFile.records.filter((npc) => npc.id === record.npc_id);
           if (result && result.length) {
             name = result[0].name;
           }
@@ -73,7 +73,7 @@ function FileTable(props) {
 
         rows.push(buildRow(index, (<>
           <td>{record.npc_id}</td>
-          {npc_file && <td>{name}</td>}
+          {npcFile && <td>{name}</td>}
         </>)));
       }
     });

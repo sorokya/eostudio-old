@@ -11,6 +11,8 @@ const equipableType = ['Weapon', 'Shield', 'Armor', 'Hat', 'Boots',
 
 function ItemRecord(props) {
   const record = props.record;
+  const classFile = props.classFile;
+
   const [tab, setTab] = useState('#properties');
   const [name, setName] = useState(record.name);
   const [gfxId, setGfxId] = useState(record.graphic_id);
@@ -82,6 +84,11 @@ function ItemRecord(props) {
 
   const onTabSelect = (tab) => setTab(tab);
   const hasStats = () => equipableType.includes(type) || type === 'Heal';
+  const getClassOptions = () => {
+    const options = [<option key="0" value="0"></option>];
+    return options.concat(
+      classFile.records.map(r => <option key={r.id} value={r.id}>{r.name}</option>));
+  };
 
   return (
     <Card className="edit-record">
@@ -359,7 +366,12 @@ function ItemRecord(props) {
               <Col>
                 <Form.Group controlId="classReq">
                   <Form.Label>Class</Form.Label>
-                  <Form.Control type="number" placeholder="Class" value={classReq} onChange={onClassReqChange} />
+                  {classFile &&
+                    <Form.Control as="select" value={classReq} onChange={onClassReqChange}>
+                      {getClassOptions()}
+                    </Form.Control>}
+                  {!classFile &&
+                    <Form.Control type="number" placeholder="Class" value={classReq} onChange={onClassReqChange} />}
                 </Form.Group>
               </Col>
             </Row>
