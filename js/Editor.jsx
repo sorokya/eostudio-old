@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import FileTable from './FileTable';
 import ItemRecord from './ItemRecord';
+import ClassRecord from './ClassRecord';
 
 function Editor(props) {
   const pubType = props.pubType;
@@ -22,6 +23,8 @@ function Editor(props) {
 
   const getRecord = () => {
     switch (pubType) {
+      case 'class':
+        return <ClassRecord record={record} file={file} />;
       case 'item':
         return <ItemRecord record={record} />;
     }
