@@ -1,6 +1,6 @@
 export default {
   getFileExtension(fileName) {
-    return fileName.substr(fileName.indexOf('.') + 1);
+    return fileName.substr(fileName.lastIndexOf('.') + 1);
   },
   getPubType(fileName) {
     const extension = this.getFileExtension(fileName);
