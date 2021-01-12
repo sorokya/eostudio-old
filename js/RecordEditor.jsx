@@ -28,7 +28,7 @@ function RecordEditor(props) {
     <Modal show={show} onHide={onClose}>
       <Modal.Header closeButton>
         <Modal.Title>
-          Edit
+          Edit&nbsp;
           {pubType}
         </Modal.Title>
       </Modal.Header>
