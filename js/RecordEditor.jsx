@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import ItemRecord from './ItemRecord';
-import ClassRecord from './ClassRecord';
-import NPCRecord from './NPCRecord';
+import ItemRecord from './Records/Item';
+import ClassRecord from './Records/Class';
+import NPCRecord from './Records/NPC';
+import SpellRecord from './Records/Spell';
 
 function RecordEditor(props) {
   const { pubType, record, classFile, show, onClose } = props;
@@ -17,6 +18,8 @@ function RecordEditor(props) {
         return <ItemRecord record={record} classFile={classFile} />;
       case 'npc':
         return <NPCRecord record={record} />;
+      case 'spell':
+        return <SpellRecord record={record} />;
       default:
         throw new Error(`No record type found for ${pubType}`);
     }
