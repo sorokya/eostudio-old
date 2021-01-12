@@ -46,8 +46,10 @@ function RecordEditor(props) {
 
   const onSubmit = () => {};
 
+  const getModalSize = () => (['drop'].includes(pubType) ? 'lg' : '');
+
   return (
-    <Modal show={show} onHide={onClose} size="lg">
+    <Modal show={show} onHide={onClose} size={getModalSize()}>
       <Modal.Header closeButton>
         <Modal.Title>
           Edit&nbsp;
