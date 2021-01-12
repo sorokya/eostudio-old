@@ -2,13 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import ItemRecord from './Records/Item';
 import ClassRecord from './Records/Class';
+import DropRecord from './Records/Drop';
+import ItemRecord from './Records/Item';
 import NPCRecord from './Records/NPC';
 import SpellRecord from './Records/Spell';
 
 function RecordEditor(props) {
-  const { pubType, record, classFile, show, onClose } = props;
+  const {
+    pubType,
+    record,
+    classFile,
+    npcFile,
+    itemFile,
+    dropFile,
+    show,
+    onClose,
+  } = props;
 
   const getRecord = () => {
     switch (pubType) {
@@ -20,15 +30,24 @@ function RecordEditor(props) {
         return <NPCRecord record={record} />;
       case 'spell':
         return <SpellRecord record={record} />;
+      case 'drop':
+        return (
+          <DropRecord
+            record={record}
+            dropFile={dropFile}
+            npcFile={npcFile}
+            itemFile={itemFile}
+          />
+        );
       default:
-        throw new Error(`No record type found for ${pubType}`);
+        return <div>&nbsp;</div>;
     }
   };
 
   const onSubmit = () => {};
 
   return (
-    <Modal show={show} onHide={onClose}>
+    <Modal show={show} onHide={onClose} size="lg">
       <Modal.Header closeButton>
         <Modal.Title>
           Edit&nbsp;
@@ -54,6 +73,9 @@ RecordEditor.propTypes = {
   pubType: PropTypes.string.isRequired,
   record: PropTypes.object.isRequired,
   classFile: PropTypes.object.isRequired,
+  dropFile: PropTypes.object.isRequired,
+  itemFile: PropTypes.object.isRequired,
+  npcFile: PropTypes.object.isRequired,
   show: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
 };

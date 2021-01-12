@@ -33,6 +33,7 @@
        1,       {
          "allowForLoopAfterthoughts": true
        }
-    ]
+    ],
+    "react/jsx-one-expression-per-line": 0
   }
 }

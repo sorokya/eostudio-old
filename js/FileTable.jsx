@@ -7,6 +7,7 @@ import Form from 'react-bootstrap/Form';
 function FileTable(props) {
   const { pubType, file, npcFile, onRecordSelect } = props;
   const [filter, setFilter] = useState('');
+  const haveNpcFile = () => npcFile && npcFile.records.length > 0;
 
   useEffect(() => {
     setFilter('');
@@ -51,7 +52,7 @@ function FileTable(props) {
       return (
         <tr>
           <th>NPC ID</th>
-          {npcFile && <th>Name</th>}
+          {haveNpcFile() && <th>Name</th>}
         </tr>
       );
     }
@@ -95,7 +96,7 @@ function FileTable(props) {
         );
       } else if (['drop', 'talk'].includes(pubType)) {
         let name = '';
-        if (npcFile) {
+        if (haveNpcFile()) {
           const result = npcFile.records.filter(
             (npc) => npc.id === record.npc_id
           );
@@ -109,7 +110,7 @@ function FileTable(props) {
             index,
             <>
               <td>{record.npc_id}</td>
-              {npcFile && <td>{name}</td>}
+              {haveNpcFile() && <td>{name}</td>}
             </>
           )
         );

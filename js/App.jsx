@@ -55,11 +55,17 @@ function App() {
   const getRecordEditor = () => {
     const pubType = getPubType();
     const classFile = getPubFile('class');
+    const dropFile = getPubFile('drop');
+    const npcFile = getPubFile('npc');
+    const itemFile = getPubFile('item');
     return (
       <RecordEditor
         pubType={pubType}
         record={record}
         classFile={classFile}
+        dropFile={dropFile}
+        itemFile={itemFile}
+        npcFile={npcFile}
         show={showRecordEditor}
         onClose={onRecordEditorClose}
       />
