@@ -1,5 +1,12 @@
 @import "~bootstrap";
 
+header {
+  padding:5px 0;
+  img {
+    margin-right:5px;
+  }
+}
+
 .file-upload {
   border:2px dashed #757575;
   border-radius: 5px;
