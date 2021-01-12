@@ -16,7 +16,6 @@ function NPCRecord(props) {
   const [type, setType] = useState(record.npc_type);
   const [vendorId, setVendorId] = useState(record.vendor_id);
   const [hp, setHP] = useState(record.hp);
-  const [tp, setTP] = useState(record.tp);
   const [minDamage, setMinDamage] = useState(record.min_damage);
   const [maxDamage, setMaxDamage] = useState(record.max_damage);
   const [accuracy, setAccuracy] = useState(record.accuracy);
@@ -33,7 +32,6 @@ function NPCRecord(props) {
   const onTypeChange = (e) => setType(e.target.value);
   const onVendorIdChange = (e) => setVendorId(e.target.value);
   const onHPChange = (e) => setHP(e.target.value);
-  const onTPChange = (e) => setTP(e.target.value);
   const onMinDamageChange = (e) => setMinDamage(e.target.value);
   const onMaxDamageChange = (e) => setMaxDamage(e.target.value);
   const onAccuracyChange = (e) => setAccuracy(e.target.value);
@@ -43,8 +41,9 @@ function NPCRecord(props) {
   const onElementPowerChange = (e) => setElementPower(e.target.value);
   const onExperienceChange = (e) => setExperience(e.target.value);
 
-  const onTabSelect = (tab) => setTab(tab);
+  const onTabSelect = (newTab) => setTab(newTab);
   const isMonster = () => ['Passive', 'Aggressive'].includes(type);
+  const hasVendorId = () => ['Inn', 'Shop', 'Skills', 'Quest'].includes(type);
 
   return (
     <>
@@ -128,8 +127,119 @@ function NPCRecord(props) {
                 />
               </>
             )}
+            {hasVendorId() && (
+              <Form.Group controlId="vendorId">
+                <Form.Label>Vendor ID</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="Vendor ID"
+                  value={vendorId}
+                  onChange={onVendorIdChange}
+                />
+              </Form.Group>
+            )}
           </Col>
         </Row>
+      )}
+      {tab === '#stats' && (
+        <>
+          <Row>
+            <Col>
+              <Form.Group controlId="hp">
+                <Form.Label>HP</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="HP"
+                  value={hp}
+                  onChange={onHPChange}
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Form.Group controlId="minDamage">
+                <Form.Label>Minimum Damage</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="Minimum Damage"
+                  value={minDamage}
+                  onChange={onMinDamageChange}
+                />
+              </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group controlId="maxDamage">
+                <Form.Label>Maximum Damage</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="Maximum Damage"
+                  value={maxDamage}
+                  onChange={onMaxDamageChange}
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Form.Group controlId="accuracy">
+                <Form.Label>Accuracy</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="Accuracy"
+                  value={accuracy}
+                  onChange={onAccuracyChange}
+                />
+              </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group controlId="evade">
+                <Form.Label>Evade</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="Evade"
+                  value={evade}
+                  onChange={onEvadeChange}
+                />
+              </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group controlId="armor">
+                <Form.Label>Armor</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="Armor"
+                  value={armor}
+                  onChange={onArmorChange}
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Form.Group controlId="element">
+                <Form.Label>Element</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="Element"
+                  value={element}
+                  onChange={onElementChange}
+                />
+              </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group controlId="elementPower">
+                <Form.Label>Element Power</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="Element Power"
+                  value={elementPower}
+                  onChange={onElementPowerChange}
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+        </>
       )}
     </>
   );
