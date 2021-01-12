@@ -19,10 +19,17 @@ function FileImporter(props) {
       const array = new Uint8Array(arrayBuffer);
       const file = eo[`get_${pubType}_file`](array);
       setFiles((oldFiles) => {
+        const existingFile = oldFiles.filter((f) => f.pubType === pubType);
+        if (existingFile && existingFile.length) {
+          const fileIndex = oldFiles.indexOf(existingFile[0]);
+          oldFiles.splice(fileIndex, 1);
+        }
+
         oldFiles.push({
           pubType,
           file,
         });
+
         return oldFiles;
       });
       setLoadedCount((count) => count + 1);
