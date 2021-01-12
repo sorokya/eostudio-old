@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import ItemRecord from './ItemRecord';
@@ -6,9 +7,7 @@ import ClassRecord from './ClassRecord';
 import NPCRecord from './NPCRecord';
 
 function RecordEditor(props) {
-  const pubType = props.pubType;
-  const record = props.record;
-  const classFile = props.classFile;
+  const { pubType, record, classFile, show, onClose } = props;
 
   const getRecord = () => {
     switch (pubType) {
@@ -17,30 +16,43 @@ function RecordEditor(props) {
       case 'item':
         return <ItemRecord record={record} classFile={classFile} />;
       case 'npc':
-        return <NPCRecord record={record} />
+        return <NPCRecord record={record} />;
+      default:
+        throw new Error(`No record type found for ${pubType}`);
     }
   };
 
-  const onSubmit = () => {
-
-  };
+  const onSubmit = () => {};
 
   return (
-    <Modal show={props.show} onHide={props.onClose}>
+    <Modal show={show} onHide={onClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Edit {pubType}</Modal.Title>
+        <Modal.Title>
+          Edit
+          {pubType}
+        </Modal.Title>
       </Modal.Header>
 
-      <Modal.Body>
-        {getRecord()}
-      </Modal.Body>
+      <Modal.Body>{getRecord()}</Modal.Body>
 
       <Modal.Footer>
-        <Button variant="default" onClick={props.onClose}>Close</Button>
-        <Button variant="primary" onClick={onSubmit}>Submit</Button>
+        <Button variant="default" onClick={onClose}>
+          Close
+        </Button>
+        <Button variant="primary" onClick={onSubmit}>
+          Submit
+        </Button>
       </Modal.Footer>
     </Modal>
   );
 }
+
+RecordEditor.propTypes = {
+  pubType: PropTypes.string.isRequired,
+  record: PropTypes.object.isRequired,
+  classFile: PropTypes.object.isRequired,
+  show: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+};
 
 export default RecordEditor;

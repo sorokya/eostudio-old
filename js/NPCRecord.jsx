@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Nav from 'react-bootstrap/Nav';
 
 function NPCRecord(props) {
-  const record = props.record;
-  console.log(record);
+  const { record } = props;
 
   const [tab, setTab] = useState('#properties');
   const [name, setName] = useState(record.name);
@@ -57,16 +57,26 @@ function NPCRecord(props) {
         </Nav.Item>
       </Nav>
 
-      {tab === '#properties' &&
+      {tab === '#properties' && (
         <Row>
           <Col>
             <Form.Group controlId="name">
               <Form.Label>Name</Form.Label>
-              <Form.Control type="text" placeholder="NPC name" value={name} onChange={onNameChange} />
+              <Form.Control
+                type="text"
+                placeholder="NPC name"
+                value={name}
+                onChange={onNameChange}
+              />
             </Form.Group>
             <Form.Group controlId="gfxId">
               <Form.Label>Graphic ID</Form.Label>
-              <Form.Control type="number" placeholder="Graphic ID" value={gfxId} onChange={onGfxIdChange} />
+              <Form.Control
+                type="number"
+                placeholder="Graphic ID"
+                value={gfxId}
+                onChange={onGfxIdChange}
+              />
             </Form.Group>
             <Form.Group controlId="type">
               <Form.Label>Type</Form.Label>
@@ -91,19 +101,42 @@ function NPCRecord(props) {
             </Form.Group>
           </Col>
           <Col>
-            {isMonster() &&
+            {isMonster() && (
               <>
                 <Form.Group controlId="experience">
                   <Form.Label>Experience</Form.Label>
-                  <Form.Control type="number" placeholder="Experience" value={experience} onChange={onExperienceChange} />
+                  <Form.Control
+                    type="number"
+                    placeholder="Experience"
+                    value={experience}
+                    onChange={onExperienceChange}
+                  />
                 </Form.Group>
-                <Form.Check type="checkbox" label="Boss" id="boss" checked={boss} onChange={onBossChange} />
-                <Form.Check type="checkbox" label="Child" id="child" checked={child} onChange={onChildChange} />
-              </>}
+                <Form.Check
+                  type="checkbox"
+                  label="Boss"
+                  id="boss"
+                  checked={boss}
+                  onChange={onBossChange}
+                />
+                <Form.Check
+                  type="checkbox"
+                  label="Child"
+                  id="child"
+                  checked={child}
+                  onChange={onChildChange}
+                />
+              </>
+            )}
           </Col>
-        </Row>}
+        </Row>
+      )}
     </>
   );
 }
+
+NPCRecord.propTypes = {
+  record: PropTypes.object.isRequired,
+};
 
 export default NPCRecord;

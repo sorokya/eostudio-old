@@ -1,17 +1,29 @@
+/* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Nav from 'react-bootstrap/Nav';
 
 const dollItemType = ['Weapon', 'Shield', 'Armor', 'Hat', 'Boots'];
-const equipableType = ['Weapon', 'Shield', 'Armor', 'Hat', 'Boots',
-  'Accessory', 'Belt', 'Gloves', 'Necklace', 'Ring', 'Armlet', 'Bracer'];
+const equipableType = [
+  'Weapon',
+  'Shield',
+  'Armor',
+  'Hat',
+  'Boots',
+  'Accessory',
+  'Belt',
+  'Gloves',
+  'Necklace',
+  'Ring',
+  'Armlet',
+  'Bracer',
+];
 
 function ItemRecord(props) {
-  const record = props.record;
-  const classFile = props.classFile;
-
+  const { record, classFile } = props;
   const [tab, setTab] = useState('#properties');
   const [name, setName] = useState(record.name);
   const [gfxId, setGfxId] = useState(record.graphic_id);
@@ -37,11 +49,15 @@ function ItemRecord(props) {
   const [levelReq, setLevelReq] = useState(record.level_req);
   const [classReq, setClassReq] = useState(record.class_req);
   const [strengthReq, setStrengthReq] = useState(record.strength_req);
-  const [intelligenceReq, setIntelligenceReq] = useState(record.intelligence_req);
+  const [intelligenceReq, setIntelligenceReq] = useState(
+    record.intelligence_req
+  );
   const [wisdomReq, setWisdomReq] = useState(record.wisdom_req);
   const [agilityReq, setAgilityReq] = useState(record.agility_req);
   const [charismaReq, setCharismaReq] = useState(record.charisma_req);
-  const [constitutionReq, setConstitutionReq] = useState(record.constitution_req);
+  const [constitutionReq, setConstitutionReq] = useState(
+    record.constitution_req
+  );
   const [element, setElement] = useState(record.element);
   const [elementPower, setElementPower] = useState(record.element_power);
   const [weight, setWeight] = useState(record.weight);
@@ -81,12 +97,18 @@ function ItemRecord(props) {
   const onWeightChange = (e) => setWeight(e.target.value);
   const onSizeChange = (e) => setSize(e.target.value);
 
-  const onTabSelect = (tab) => setTab(tab);
+  const onTabSelect = (newTab) => setTab(newTab);
   const hasStats = () => equipableType.includes(type) || type === 'Heal';
   const getClassOptions = () => {
-    const options = [<option key="0" value="0"></option>];
+    // eslint-disable-next-line jsx-a11y/control-has-associated-label
+    const options = [<option key="0" value="0" />];
     return options.concat(
-      classFile.records.map(r => <option key={r.id} value={r.id}>{r.name}</option>));
+      classFile.records.map((r) => (
+        <option key={r.id} value={r.id}>
+          {r.name}
+        </option>
+      ))
+    );
   };
 
   return (
@@ -96,23 +118,40 @@ function ItemRecord(props) {
           <Nav.Link href="#properties">Properties</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link href="#stats" disabled={!hasStats()}>Stats</Nav.Link>
+          <Nav.Link href="#stats" disabled={!hasStats()}>
+            Stats
+          </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link href="#requirements" disabled={!equipableType.includes(type)}>Requirements</Nav.Link>
+          <Nav.Link
+            href="#requirements"
+            disabled={!equipableType.includes(type)}
+          >
+            Requirements
+          </Nav.Link>
         </Nav.Item>
       </Nav>
 
-      {tab === '#properties' &&
+      {tab === '#properties' && (
         <Row>
           <Col>
             <Form.Group controlId="name">
               <Form.Label>Name</Form.Label>
-              <Form.Control type="text" placeholder="Item name" value={name} onChange={onNameChange} />
+              <Form.Control
+                type="text"
+                placeholder="Item name"
+                value={name}
+                onChange={onNameChange}
+              />
             </Form.Group>
             <Form.Group controlId="gfxId">
               <Form.Label>Graphic ID</Form.Label>
-              <Form.Control type="number" placeholder="Graphic ID" value={gfxId} onChange={onGfxIdChange} />
+              <Form.Control
+                type="number"
+                placeholder="Graphic ID"
+                value={gfxId}
+                onChange={onGfxIdChange}
+              />
             </Form.Group>
             <Form.Group controlId="type">
               <Form.Label>Type</Form.Label>
@@ -147,7 +186,11 @@ function ItemRecord(props) {
             </Form.Group>
             <Form.Group controlId="subType">
               <Form.Label>Sub-Type</Form.Label>
-              <Form.Control as="select" value={subType} onChange={onSubTypeChange}>
+              <Form.Control
+                as="select"
+                value={subType}
+                onChange={onSubTypeChange}
+              >
                 <option>None</option>
                 <option>Ranged</option>
                 <option>Arrows</option>
@@ -157,7 +200,11 @@ function ItemRecord(props) {
             </Form.Group>
             <Form.Group controlId="special">
               <Form.Label>Special</Form.Label>
-              <Form.Control as="select" value={special} onChange={onSpecialChange}>
+              <Form.Control
+                as="select"
+                value={special}
+                onChange={onSpecialChange}
+              >
                 <option>Normal</option>
                 <option>Uncommon</option>
                 <option>Rare</option>
@@ -170,7 +217,12 @@ function ItemRecord(props) {
           <Col>
             <Form.Group controlId="weight">
               <Form.Label>Weight</Form.Label>
-              <Form.Control type="number" placeholder="Weight" value={weight} onChange={onWeightChange} />
+              <Form.Control
+                type="number"
+                placeholder="Weight"
+                value={weight}
+                onChange={onWeightChange}
+              />
             </Form.Group>
             <Form.Group controlId="special">
               <Form.Label>Size</Form.Label>
@@ -185,109 +237,196 @@ function ItemRecord(props) {
                 <option value="Size2x4">2x4</option>
               </Form.Control>
             </Form.Group>
-            {type === 'Teleport' &&
+            {type === 'Teleport' && (
               <>
                 <Form.Group controlId="scrollMap">
                   <Form.Label>Scroll Map</Form.Label>
-                  <Form.Control type="number" placeholder="Scroll map" value={param1} onChange={onParam1Change} />
+                  <Form.Control
+                    type="number"
+                    placeholder="Scroll map"
+                    value={param1}
+                    onChange={onParam1Change}
+                  />
                 </Form.Group>
                 <Form.Group controlId="scrollMap">
                   <Form.Label>Scroll X</Form.Label>
-                  <Form.Control type="number" placeholder="Scroll x" value={param2} onChange={onParam2Change} />
+                  <Form.Control
+                    type="number"
+                    placeholder="Scroll x"
+                    value={param2}
+                    onChange={onParam2Change}
+                  />
                 </Form.Group>
                 <Form.Group controlId="scrollMap">
                   <Form.Label>Scroll Y</Form.Label>
-                  <Form.Control type="number" placeholder="Scroll y" value={param3} onChange={onParam3Change} />
+                  <Form.Control
+                    type="number"
+                    placeholder="Scroll y"
+                    value={param3}
+                    onChange={onParam3Change}
+                  />
                 </Form.Group>
-              </>}
-            {dollItemType.includes(type) &&
+              </>
+            )}
+            {dollItemType.includes(type) && (
               <Form.Group controlId="Doll Graphic ID">
                 <Form.Label>Doll Graphic ID</Form.Label>
-                <Form.Control type="number" placeholder="Doll Graphic ID" value={param1} onChange={onParam1Change} />
+                <Form.Control
+                  type="number"
+                  placeholder="Doll Graphic ID"
+                  value={param1}
+                  onChange={onParam1Change}
+                />
               </Form.Group>
-            }
-            {type === 'Key' &&
+            )}
+            {type === 'Key' && (
               <Form.Group controlId="keyID">
                 <Form.Label>Key ID</Form.Label>
-                <Form.Control type="number" placeholder="Key ID" value={param1} onChange={onParam1Change} />
-              </Form.Group>}
-            {type === 'EXPReward' &&
+                <Form.Control
+                  type="number"
+                  placeholder="Key ID"
+                  value={param1}
+                  onChange={onParam1Change}
+                />
+              </Form.Group>
+            )}
+            {type === 'EXPReward' && (
               <Form.Group controlId="expReward">
                 <Form.Label>EXP Reward</Form.Label>
-                <Form.Control type="number" placeholder="EXP Reward" value={param1} onChange={onParam1Change} />
-              </Form.Group>}
-            {type === 'HairDye' &&
+                <Form.Control
+                  type="number"
+                  placeholder="EXP Reward"
+                  value={param1}
+                  onChange={onParam1Change}
+                />
+              </Form.Group>
+            )}
+            {type === 'HairDye' && (
               <Form.Group controlId="hairColor">
                 <Form.Label>Hair Color</Form.Label>
-                <Form.Control type="number" placeholder="Hair Color" value={param1} onChange={onParam1Change} />
-              </Form.Group>}
-            {type === 'EffectPotion' &&
+                <Form.Control
+                  type="number"
+                  placeholder="Hair Color"
+                  value={param1}
+                  onChange={onParam1Change}
+                />
+              </Form.Group>
+            )}
+            {type === 'EffectPotion' && (
               <Form.Group controlId="effect">
                 <Form.Label>Effect</Form.Label>
-                <Form.Control type="number" placeholder="Effect" value={param1} onChange={onParam1Change} />
-              </Form.Group>}
-            {type === 'Armor' &&
+                <Form.Control
+                  type="number"
+                  placeholder="Effect"
+                  value={param1}
+                  onChange={onParam1Change}
+                />
+              </Form.Group>
+            )}
+            {type === 'Armor' && (
               <Form.Group controlId="gender">
                 <Form.Label>Gender</Form.Label>
-                <Form.Control as="select" value={param2} onChange={onParam2Change}>
+                <Form.Control
+                  as="select"
+                  value={param2}
+                  onChange={onParam2Change}
+                >
                   <option value="0">Female</option>
                   <option value="1">Male</option>
                 </Form.Control>
-              </Form.Group>}
+              </Form.Group>
+            )}
           </Col>
-        </Row>}
-      {tab === '#stats' &&
+        </Row>
+      )}
+      {tab === '#stats' && (
         <>
-          {hasStats(type) &&
+          {hasStats(type) && (
             <Row>
               <Col>
                 <Form.Group controlId="hp">
                   <Form.Label>HP</Form.Label>
-                  <Form.Control type="number" placeholder="HP" value={hp} onChange={onHPChange} />
+                  <Form.Control
+                    type="number"
+                    placeholder="HP"
+                    value={hp}
+                    onChange={onHPChange}
+                  />
                 </Form.Group>
               </Col>
               <Col>
                 <Form.Group controlId="tp">
                   <Form.Label>TP</Form.Label>
-                  <Form.Control type="number" placeholder="TP" value={tp} onChange={onTPChange} />
+                  <Form.Control
+                    type="number"
+                    placeholder="TP"
+                    value={tp}
+                    onChange={onTPChange}
+                  />
                 </Form.Group>
               </Col>
             </Row>
-          }
-          {type === 'Weapon' &&
+          )}
+          {type === 'Weapon' && (
             <Row>
               <Col>
                 <Form.Group controlId="minDamage">
                   <Form.Label>Minimum Damage</Form.Label>
-                  <Form.Control type="number" placeholder="Minimum Damage" value={minDamage} onChange={onMinDamageChange} />
+                  <Form.Control
+                    type="number"
+                    placeholder="Minimum Damage"
+                    value={minDamage}
+                    onChange={onMinDamageChange}
+                  />
                 </Form.Group>
               </Col>
               <Col>
                 <Form.Group controlId="maxDamage">
                   <Form.Label>Maximum Damage</Form.Label>
-                  <Form.Control type="number" placeholder="Maximum Damage" value={maxDamage} onChange={onMaxDamageChange} />
+                  <Form.Control
+                    type="number"
+                    placeholder="Maximum Damage"
+                    value={maxDamage}
+                    onChange={onMaxDamageChange}
+                  />
                 </Form.Group>
               </Col>
-            </Row>}
-          {equipableType.includes(type) &&
+            </Row>
+          )}
+          {equipableType.includes(type) && (
             <>
               <Row>
                 <Col>
                   <Form.Group controlId="accuracy">
                     <Form.Label>Accuracy</Form.Label>
-                    <Form.Control type="number" placeholder="Accuracy" value={accuracy} onChange={onAccuracyChange} />
+                    <Form.Control
+                      type="number"
+                      placeholder="Accuracy"
+                      value={accuracy}
+                      onChange={onAccuracyChange}
+                    />
                   </Form.Group>
                 </Col>
                 <Col>
                   <Form.Group controlId="evade">
                     <Form.Label>Evade</Form.Label>
-                    <Form.Control type="number" placeholder="Evade" value={evade} onChange={onEvadeChange} />
+                    <Form.Control
+                      type="number"
+                      placeholder="Evade"
+                      value={evade}
+                      onChange={onEvadeChange}
+                    />
                   </Form.Group>
                 </Col>
                 <Col>
                   <Form.Group controlId="armor">
                     <Form.Label>Armor</Form.Label>
-                    <Form.Control type="number" placeholder="Armor" value={armor} onChange={onArmorChange} />
+                    <Form.Control
+                      type="number"
+                      placeholder="Armor"
+                      value={armor}
+                      onChange={onArmorChange}
+                    />
                   </Form.Group>
                 </Col>
               </Row>
@@ -295,19 +434,34 @@ function ItemRecord(props) {
                 <Col>
                   <Form.Group controlId="strength">
                     <Form.Label>Strength</Form.Label>
-                    <Form.Control type="number" placeholder="Stength" value={strength} onChange={onStrengthChange} />
+                    <Form.Control
+                      type="number"
+                      placeholder="Stength"
+                      value={strength}
+                      onChange={onStrengthChange}
+                    />
                   </Form.Group>
                 </Col>
                 <Col>
                   <Form.Group controlId="intelligence">
                     <Form.Label>Intelligence</Form.Label>
-                    <Form.Control type="number" placeholder="Intelligence" value={intelligence} onChange={onIntelligenceChange} />
+                    <Form.Control
+                      type="number"
+                      placeholder="Intelligence"
+                      value={intelligence}
+                      onChange={onIntelligenceChange}
+                    />
                   </Form.Group>
                 </Col>
                 <Col>
                   <Form.Group controlId="wisdom">
                     <Form.Label>Wisdom</Form.Label>
-                    <Form.Control type="number" placeholder="Wisdom" value={wisdom} onChange={onWisdomChange} />
+                    <Form.Control
+                      type="number"
+                      placeholder="Wisdom"
+                      value={wisdom}
+                      onChange={onWisdomChange}
+                    />
                   </Form.Group>
                 </Col>
               </Row>
@@ -315,19 +469,34 @@ function ItemRecord(props) {
                 <Col>
                   <Form.Group controlId="agility">
                     <Form.Label>Agility</Form.Label>
-                    <Form.Control type="number" placeholder="Agility" value={agility} onChange={onAgilityChange} />
+                    <Form.Control
+                      type="number"
+                      placeholder="Agility"
+                      value={agility}
+                      onChange={onAgilityChange}
+                    />
                   </Form.Group>
                 </Col>
                 <Col>
                   <Form.Group controlId="charisma">
                     <Form.Label>Charisma</Form.Label>
-                    <Form.Control type="number" placeholder="Charisma" value={charisma} onChange={onCharismaChange} />
+                    <Form.Control
+                      type="number"
+                      placeholder="Charisma"
+                      value={charisma}
+                      onChange={onCharismaChange}
+                    />
                   </Form.Group>
                 </Col>
                 <Col>
                   <Form.Group controlId="constitution">
                     <Form.Label>Constitution</Form.Label>
-                    <Form.Control type="number" placeholder="Constitution" value={constitution} onChange={onConstitutionChange} />
+                    <Form.Control
+                      type="number"
+                      placeholder="Constitution"
+                      value={constitution}
+                      onChange={onConstitutionChange}
+                    />
                   </Form.Group>
                 </Col>
               </Row>
@@ -335,37 +504,64 @@ function ItemRecord(props) {
                 <Col>
                   <Form.Group controlId="element">
                     <Form.Label>Element</Form.Label>
-                    <Form.Control type="number" placeholder="Element" value={element} onChange={onElementChange} />
+                    <Form.Control
+                      type="number"
+                      placeholder="Element"
+                      value={element}
+                      onChange={onElementChange}
+                    />
                   </Form.Group>
                 </Col>
                 <Col>
                   <Form.Group controlId="elementPower">
                     <Form.Label>Element Power</Form.Label>
-                    <Form.Control type="number" placeholder="Element Power" value={elementPower} onChange={onElementPowerChange} />
+                    <Form.Control
+                      type="number"
+                      placeholder="Element Power"
+                      value={elementPower}
+                      onChange={onElementPowerChange}
+                    />
                   </Form.Group>
                 </Col>
               </Row>
-            </>}
+            </>
+          )}
         </>
-      }
-      {tab === '#requirements' &&
+      )}
+      {tab === '#requirements' && (
         <>
           <Row>
             <Col>
               <Form.Group controlId="levelReq">
                 <Form.Label>Level</Form.Label>
-                <Form.Control type="number" placeholder="Level" value={levelReq} onChange={onLevelReqChange} />
+                <Form.Control
+                  type="number"
+                  placeholder="Level"
+                  value={levelReq}
+                  onChange={onLevelReqChange}
+                />
               </Form.Group>
             </Col>
             <Col>
               <Form.Group controlId="classReq">
                 <Form.Label>Class</Form.Label>
-                {classFile &&
-                  <Form.Control as="select" value={classReq} onChange={onClassReqChange}>
+                {classFile && (
+                  <Form.Control
+                    as="select"
+                    value={classReq}
+                    onChange={onClassReqChange}
+                  >
                     {getClassOptions()}
-                  </Form.Control>}
-                {!classFile &&
-                  <Form.Control type="number" placeholder="Class" value={classReq} onChange={onClassReqChange} />}
+                  </Form.Control>
+                )}
+                {!classFile && (
+                  <Form.Control
+                    type="number"
+                    placeholder="Class"
+                    value={classReq}
+                    onChange={onClassReqChange}
+                  />
+                )}
               </Form.Group>
             </Col>
           </Row>
@@ -373,19 +569,34 @@ function ItemRecord(props) {
             <Col>
               <Form.Group controlId="strengthReq">
                 <Form.Label>Strength</Form.Label>
-                <Form.Control type="number" placeholder="Stength" value={strengthReq} onChange={onStrengthReqChange} />
+                <Form.Control
+                  type="number"
+                  placeholder="Stength"
+                  value={strengthReq}
+                  onChange={onStrengthReqChange}
+                />
               </Form.Group>
             </Col>
             <Col>
               <Form.Group controlId="intelligenceReq">
                 <Form.Label>Intelligence</Form.Label>
-                <Form.Control type="number" placeholder="Intelligence" value={intelligenceReq} onChange={onIntelligenceReqChange} />
+                <Form.Control
+                  type="number"
+                  placeholder="Intelligence"
+                  value={intelligenceReq}
+                  onChange={onIntelligenceReqChange}
+                />
               </Form.Group>
             </Col>
             <Col>
               <Form.Group controlId="wisdomReq">
                 <Form.Label>Wisdom</Form.Label>
-                <Form.Control type="number" placeholder="Wisdom" value={wisdomReq} onChange={onWisdomReqChange} />
+                <Form.Control
+                  type="number"
+                  placeholder="Wisdom"
+                  value={wisdomReq}
+                  onChange={onWisdomReqChange}
+                />
               </Form.Group>
             </Col>
           </Row>
@@ -393,25 +604,50 @@ function ItemRecord(props) {
             <Col>
               <Form.Group controlId="agilityReq">
                 <Form.Label>Agility</Form.Label>
-                <Form.Control type="number" placeholder="Agility" value={agilityReq} onChange={onAgilityReqChange} />
+                <Form.Control
+                  type="number"
+                  placeholder="Agility"
+                  value={agilityReq}
+                  onChange={onAgilityReqChange}
+                />
               </Form.Group>
             </Col>
             <Col>
               <Form.Group controlId="charismaReq">
                 <Form.Label>Charisma</Form.Label>
-                <Form.Control type="number" placeholder="Charisma" value={charismaReq} onChange={onCharismaReqChange} />
+                <Form.Control
+                  type="number"
+                  placeholder="Charisma"
+                  value={charismaReq}
+                  onChange={onCharismaReqChange}
+                />
               </Form.Group>
             </Col>
             <Col>
               <Form.Group controlId="constitutionReq">
                 <Form.Label>Constitution</Form.Label>
-                <Form.Control type="number" placeholder="Constitution" value={constitutionReq} onChange={onConstitutionReqChange} />
+                <Form.Control
+                  type="number"
+                  placeholder="Constitution"
+                  value={constitutionReq}
+                  onChange={onConstitutionReqChange}
+                />
               </Form.Group>
             </Col>
           </Row>
-        </>}
+        </>
+      )}
     </>
   );
 }
+
+ItemRecord.propTypes = {
+  record: PropTypes.object.isRequired,
+  classFile: PropTypes.object,
+};
+
+ItemRecord.defaultProps = {
+  classFile: undefined,
+};
 
 export default ItemRecord;

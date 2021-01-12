@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
 function ClassRecord(props) {
-  const record = props.record;
-  const file = props.file;
+  const { record, file } = props;
   const [name, setName] = useState(record.name);
   const [base, setBase] = useState(record.base);
   const [type, setType] = useState(record.class_type);
@@ -27,9 +27,16 @@ function ClassRecord(props) {
   const onConstitutionChange = (e) => setConstitution(e.target.value);
 
   const getBaseClassOptions = () => {
-    const otherClasses = file.records.filter(r => r.id !== record.id);
-    const options = [<option key="0" value="0"></option>];
-    return options.concat(otherClasses.map(r => <option key={r.id} value={r.id}>{r.name}</option>));
+    const otherClasses = file.records.filter((r) => r.id !== record.id);
+    // eslint-disable-next-line jsx-a11y/control-has-associated-label
+    const options = [<option key="0" value="0" />];
+    return options.concat(
+      otherClasses.map((r) => (
+        <option key={r.id} value={r.id}>
+          {r.name}
+        </option>
+      ))
+    );
   };
 
   return (
@@ -38,7 +45,12 @@ function ClassRecord(props) {
         <Col>
           <Form.Group controlId="name">
             <Form.Label>Name</Form.Label>
-            <Form.Control type="text" placeholder="Name" value={name} onChange={onNameChange} />
+            <Form.Control
+              type="text"
+              placeholder="Name"
+              value={name}
+              onChange={onNameChange}
+            />
           </Form.Group>
         </Col>
         <Col>
@@ -66,19 +78,34 @@ function ClassRecord(props) {
         <Col>
           <Form.Group controlId="strength">
             <Form.Label>Strength</Form.Label>
-            <Form.Control type="number" placeholder="Stength" value={strength} onChange={onStrengthChange} />
+            <Form.Control
+              type="number"
+              placeholder="Stength"
+              value={strength}
+              onChange={onStrengthChange}
+            />
           </Form.Group>
         </Col>
         <Col>
           <Form.Group controlId="intelligence">
             <Form.Label>Intelligence</Form.Label>
-            <Form.Control type="number" placeholder="Intelligence" value={intelligence} onChange={onIntelligenceChange} />
+            <Form.Control
+              type="number"
+              placeholder="Intelligence"
+              value={intelligence}
+              onChange={onIntelligenceChange}
+            />
           </Form.Group>
         </Col>
         <Col>
           <Form.Group controlId="wisdom">
             <Form.Label>Wisdom</Form.Label>
-            <Form.Control type="number" placeholder="Wisdom" value={wisdom} onChange={onWisdomChange} />
+            <Form.Control
+              type="number"
+              placeholder="Wisdom"
+              value={wisdom}
+              onChange={onWisdomChange}
+            />
           </Form.Group>
         </Col>
       </Row>
@@ -86,24 +113,44 @@ function ClassRecord(props) {
         <Col>
           <Form.Group controlId="agility">
             <Form.Label>Agility</Form.Label>
-            <Form.Control type="number" placeholder="Agility" value={agility} onChange={onAgilityChange} />
+            <Form.Control
+              type="number"
+              placeholder="Agility"
+              value={agility}
+              onChange={onAgilityChange}
+            />
           </Form.Group>
         </Col>
         <Col>
           <Form.Group controlId="charisma">
             <Form.Label>Charisma</Form.Label>
-            <Form.Control type="number" placeholder="Charisma" value={charisma} onChange={onCharismaChange} />
+            <Form.Control
+              type="number"
+              placeholder="Charisma"
+              value={charisma}
+              onChange={onCharismaChange}
+            />
           </Form.Group>
         </Col>
         <Col>
           <Form.Group controlId="constitution">
             <Form.Label>Constitution</Form.Label>
-            <Form.Control type="number" placeholder="Constitution" value={constitution} onChange={onConstitutionChange} />
+            <Form.Control
+              type="number"
+              placeholder="Constitution"
+              value={constitution}
+              onChange={onConstitutionChange}
+            />
           </Form.Group>
         </Col>
       </Row>
     </>
   );
 }
+
+ClassRecord.propTypes = {
+  record: PropTypes.object.isRequired,
+  file: PropTypes.object.isRequired,
+};
 
 export default ClassRecord;

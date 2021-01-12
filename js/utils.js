@@ -1,8 +1,8 @@
 export default {
-  getFileExtension: function (fileName) {
+  getFileExtension(fileName) {
     return fileName.substr(fileName.indexOf('.') + 1);
   },
-  getPubType: function (fileName) {
+  getPubType(fileName) {
     const extension = this.getFileExtension(fileName);
     switch (extension) {
       case 'ecf':
@@ -21,7 +21,8 @@ export default {
         return 'talk';
       case 'emf':
         return 'master';
+      default:
+        return '';
     }
-    return ''
   },
-}
+};
