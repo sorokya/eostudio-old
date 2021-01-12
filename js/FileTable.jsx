@@ -158,7 +158,7 @@ function FileTable(props) {
 }
 
 FileTable.propTypes = {
-  pubType: PropTypes.object.isRequired,
+  pubType: PropTypes.string.isRequired,
   file: PropTypes.object.isRequired,
   npcFile: PropTypes.object,
   onRecordSelect: PropTypes.func.isRequired,
