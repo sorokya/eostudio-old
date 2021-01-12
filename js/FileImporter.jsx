@@ -45,6 +45,8 @@ function FileImporter(props) {
 
   useEffect(() => {
     if (fileCount && loadedCount === fileCount) {
+      setFileCount(0);
+      setLoadedCount(0);
       onFilesImported(files);
     }
   }, [fileCount, files, loadedCount, onFilesImported]);
