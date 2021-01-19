@@ -1,8 +1,51 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+
+function ImageCanvas(props) {
+  const { url, width, height, offset } = props;
+  const canvasRef = useRef(null);
+
+  const findImage = () => document.querySelector(`img[src="${url}"]`);
+  const createImage = (onLoad) => {
+    const image = document.createElement('img');
+    image.onload = onLoad;
+    image.style.display = 'none';
+    image.src = url;
+    document.body.appendChild(image);
+    return image;
+  };
+
+  const renderImage = () => {
+    const context = canvasRef.current.getContext('2d');
+    const image = findImage();
+    context.drawImage(image, offset, 0, width, height, 0, 0, width, height);
+  };
+
+  React.useEffect(() => {
+    const image = findImage();
+    if (image) {
+      if (image.complete) {
+        renderImage();
+      } else {
+        setTimeout(renderImage, 1000);
+      }
+    } else {
+      createImage(renderImage);
+    }
+  }, [canvasRef, height, offset, url, width]);
+
+  return <canvas ref={canvasRef} width={width} height={height} />;
+}
+
+ImageCanvas.propTypes = {
+  url: PropTypes.string.isRequired,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  offset: PropTypes.number.isRequired,
+};
 
 function FileTable(props) {
   const { pubType, file, npcFile, onRecordSelect } = props;
@@ -31,10 +74,13 @@ function FileTable(props) {
     return file.records;
   };
 
+  const haveGfx = () => file.records.filter((r) => r.imageUrl).length > 0;
+
   const getHeaderRow = () => {
     if (['item', 'class', 'npc', 'spell'].includes(pubType)) {
       return (
         <tr>
+          {haveGfx() && <th>&nbsp;</th>}
           <th>ID</th>
           <th>Name</th>
         </tr>
@@ -79,6 +125,18 @@ function FileTable(props) {
           buildRow(
             index,
             <>
+              {haveGfx() && (
+                <td>
+                  {record.imageUrl && (
+                    <ImageCanvas
+                      url={record.imageUrl}
+                      width={record.imageWidth}
+                      height={record.imageHeight}
+                      offset={record.imageOffset}
+                    />
+                  )}
+                </td>
+              )}
               <td>{record.id}</td>
               <td>{record.name}</td>
             </>

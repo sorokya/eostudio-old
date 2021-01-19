@@ -13,6 +13,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2e8c087f005730276d1096a652e92a8bacee2e2472bcc9715a74d2bec38b5820"
 
 [[package]]
+name = "byteorder"
+version = "1.4.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ae44d1a3d5a19df61dd0c8beb138458ac2a53a7ac09eba97d55592540004306b"
+
+[[package]]
 name = "cfg-if"
 version = "0.1.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -32,6 +38,15 @@ checksum = "b8d976903543e0c48546a91908f21588a680a8c8f984df9a5d69feccb2b2a211"
 dependencies = [
  "cfg-if 0.1.10",
  "wasm-bindgen",
+]
+
+[[package]]
+name = "e2gt"
+version = "0.1.0"
+source = "git+https://github.com/sorokya/e2gt#90ad6c8a28eea2d94535b264ed9e3212ee51ec38"
+dependencies = [
+ "byteorder",
+ "serde",
 ]
 
 [[package]]
@@ -61,6 +76,7 @@ name = "eostudio"
 version = "0.0.0"
 dependencies = [
  "console_error_panic_hook",
+ "e2gt",
  "eo",
  "futures",
  "js-sys",

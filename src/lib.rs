@@ -3,9 +3,10 @@ use web_sys::console;
 
 extern crate serde;
 
-use std::io::{Cursor, Write};
+use std::io::{Cursor, Seek, SeekFrom, Write};
 
-use eo::data::{pubs::*, EOByte, EOInt};
+use e2gt::Table;
+use eo::data::{pubs::*, EOByte};
 
 // When the `wee_alloc` feature is enabled, this uses `wee_alloc` as the global
 // allocator.
@@ -14,6 +15,14 @@ use eo::data::{pubs::*, EOByte, EOInt};
 #[cfg(feature = "wee_alloc")]
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
+
+#[wasm_bindgen]
+extern "C" {
+    // Use `js_namespace` here to bind `console.log(..)` instead of just
+    // `log(..)`
+    #[wasm_bindgen(js_namespace = console)]
+    fn log(s: &str);
+}
 
 #[wasm_bindgen]
 pub fn get_class_file(buf: &[EOByte]) -> JsValue {
@@ -103,4 +112,13 @@ pub fn get_talk_file(buf: &[EOByte]) -> JsValue {
     etf.read(&mut cursor).unwrap();
 
     JsValue::from_serde(&etf).unwrap()
+}
+
+#[wasm_bindgen]
+pub fn get_table_file(buf: &[EOByte]) -> JsValue {
+    let mut cursor: Cursor<Vec<EOByte>> = Cursor::new(Vec::new());
+    cursor.write_all(buf).unwrap();
+    cursor.seek(SeekFrom::Start(0)).unwrap();
+    let table = Table::deserialize(&mut cursor).unwrap();
+    JsValue::from_serde(&table).unwrap()
 }
